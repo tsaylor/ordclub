@@ -3,6 +3,8 @@ import twitter
 from django.conf import settings
 from django.shortcuts import render
 
+# https://pbs.twimg.com/profile_images/531250423391191041/ZeS6fUev_200x200.jpeg
+
 def home(request):
     api = twitter.Api(consumer_key=settings.CONSUMER_KEY,
                       consumer_secret=settings.CONSUMER_SECRET,
