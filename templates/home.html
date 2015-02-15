@@ -1,0 +1,24 @@
+<html>
+<head>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
+    <style>
+        .username {
+            font-size: 20px;
+        }
+        a {
+            color: black;
+        }
+    </style>
+</head>
+<body class="pure-g">
+    {% for p in people %}
+    <div class="pure-u-1 pure-u-lg-1-4 pure-u-md-1-3 pure-u-sm-1-2">
+        <a href='https://twitter.com/{{ p.screen_name }}'>
+            <img src='{{ p.pic }}' height='73' width='73'>
+            <span class="username">{{ p.name }}</span>
+        </a>
+    </div>
+    {% endfor %}
+</body>
+</html>
