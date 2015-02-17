@@ -8,8 +8,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import random
+import string
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -17,9 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '6hc9o+)jjw2xjc6)q#6cq#w%ubqi^jb-g7hl0%sg&!^*#k(7q_'
-
-# SECURITY WARNING: don't run with debug turned on in production!
+SECRET_KEY = ''.join(random.choice(string.printable) for x in range(40))
 DEBUG = True
 
 TEMPLATE_DEBUG = True
@@ -36,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'profiles',
 )
 
 MIDDLEWARE_CLASSES = (
