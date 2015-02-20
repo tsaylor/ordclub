@@ -1,10 +1,11 @@
+import json
 from optparse import make_option
 
 import twitter
-
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
 
+from profiles.models import Profile, Status
 
 class Command(BaseCommand):
     option_list = BaseCommand.option_list + (
@@ -28,6 +29,11 @@ class Command(BaseCommand):
                           consumer_secret=settings.CONSUMER_SECRET,
                           access_token_key=settings.ACCESS_TOKEN_KEY,
                           access_token_secret=settings.ACCESS_TOKEN_SECRET)
+        try:
+            api.VerifyCredentials()
+        except twitter.error.TwitterError as e:
+            self.stderr.write('Twitter authentication failed.')
+            return
         if options['list']:
             if '/' not in options['list']:
                 self.stderr.write(
@@ -36,5 +42,10 @@ class Command(BaseCommand):
             (owner, listname) = options['list'].split('/')
             list_members = api.GetListMembers(None, listname, owner_screen_name=owner)
             for l in list_members:
-                self.stdout.write(l.screen_name)
-
+                p = Profile.objects.create(name=l.name,
+                                           screen_name=l.screen_name,
+                                           user_json=l.AsDict())
+                if l.status:
+                    Status.objects.create(profile=p,
+                                          status_id=l.status.id,
+                                          status_json=l.status.AsDict())

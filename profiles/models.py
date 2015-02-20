@@ -81,6 +81,7 @@ class Profile(BaseModel):
 
 class Status(BaseModel):
     profile = models.ForeignKey(Profile)
+    status_id = models.CharField(max_length=18)
     _status_json = models.TextField(blank=True)
 
     @property

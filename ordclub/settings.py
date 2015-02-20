@@ -29,7 +29,7 @@ def read_env():
         config.read(settings_conf_path)
         env = config.get('DEFAULT', 'env')
         for key, value in config.items(env):
-            os.environ.setdefault(key, value)
+            os.environ.setdefault(key.upper(), value)
 
 # load env variables from the conf file into settings
 read_env()
