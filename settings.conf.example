@@ -1,0 +1,10 @@
+[DEFAULT]
+env=localhost
+
+[localhost]
+DEBUG=True
+SECRET_KEY=actuallyitsaboutethicsingamingjournalism
+
+[staging]
+
+[prod]
