@@ -1,0 +1,73 @@
+body {
+    font-family: 'Lato', serif;
+    padding: 0;
+    margin: 0;
+}
+.people {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.people li {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 10px;
+    vertical-align: top;
+}
+.people img {
+    float: left;
+    height: 73px;
+    width: 73px;
+    margin-right: 5px;
+}
+.people .name {
+    font-size: 17pt;
+    height: 54px;
+    overflow: hidden;
+}
+.people .username {
+    font-size: 13pt;
+}
+.people .long_profile {
+    width: 100%;
+    height: 200px;
+    float: left;
+}
+.long_profile img {
+    height: 200px;
+    width: 200px;
+}
+.long_profile .name {
+    font-size: 25pt;
+    height: auto;
+}
+.long_profile .username {
+    font-size: 16pt;
+    margin-top: 5px;
+}
+.long_profile .bio {
+    font-size: 13pt;
+    margin-top: 25px;
+}
+.long_profile .location {
+    font-size: 13pt;
+    margin-top: 5px;
+}
+a {
+    color: #555555;
+}
+@media all and (min-width: 450px){
+    .people li { width: 50%; }
+}
+@media all and (min-width: 800px){
+    .people li { width: 33%; }
+}
+@media all and (min-width: 1000px){
+    .people li { width: 25%; }
+}
+@media all and (min-width: 1150px){
+    .people { width: 1150px; }
+}
+.hidden {
+    display: none !important;
+}

@@ -2,61 +2,26 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href='http://fonts.googleapis.com/css?family=Lora|Lato:300' rel='stylesheet' type='text/css'>
-    <style>
-        body {
-            font-family: 'Lato', serif;
-            padding: 0;
-            margin: 0;
-        }
-        .people {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-        .people li {
-            display: inline-block;
-            width: 100%;
-            margin-bottom: 10px;
-        }
-        .people img {
-            float: left;
-            height: 73;
-            width: 73;
-            margin-right: 5px;
-        }
-        .people .name {
-            font-size: 17pt;
-            display: block;
-            height: 54px;
-            overflow: hidden;
-        }
-        .people .username {
-            font-size: 13pt;
-        }
-        a {
-            color: #555555;
-        }
-        @media all and (min-width: 450px){
-            .people li { width: 50%; }
-        }
-        @media all and (min-width: 800px){
-            .people li { width: 33%; }
-        }
-        @media all and (min-width: 1000px){
-            .people li { width: 25%; }
-        }
-        @media all and (min-width: 1150px){
-            .people { width: 1150px; }
-        }
-    </style>
+    <link href='/static/home.css' rel='stylesheet' type='text/css'>
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="/static/home.js"></script>
 </head>
 <body>
     <ul class="people">
-        {% for p in people %}<li>
-            <img src='{{ p.pic }}' />
-            <span class="name">{{ p.name }}</span>
+        {% for p in people %}<li class="short_profile">
+            <img src='{{ p.small_pic }}' />
+            <div class="name">{{ p.name }}</div>
             <a class="username" href='https://twitter.com/{{ p.screen_name }}'>@{{ p.screen_name }}</a>
+        </li><li class="long_profile hidden">
+            <img src='{{ p.large_pic }}' />
+            <div class="name">{{ p.name }}</div>
+            <a class="username" href='https://twitter.com/{{ p.screen_name }}'>@{{ p.screen_name }}</a>
+            <div class="location">{{ p.location }}</div>
+            <div class="bio">{{ p.description }}</div>
         </li>{% endfor %}
     </ul>
+    <script>
+    attach_click_handlers();
+    </script>
 </body>
 </html>

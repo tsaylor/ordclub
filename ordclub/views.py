@@ -9,8 +9,10 @@ from profiles import models
 
 def home(request):
     list_members = models.Profile.objects.all()
-    people = (dict(name=m.name,
-                   pic=m.user_json['profile_image_url'].replace('_normal', '_bigger'),
-                   screen_name=m.screen_name)
-              for m in list_members)
+    people = []
+    for m in list_members:
+        user_json = m.user_json
+        user_json['small_pic'] = user_json['profile_image_url'].replace('_normal', '_bigger')
+        user_json['large_pic'] = user_json['profile_image_url'].replace('_normal', '_200x200')
+        people.append(user_json)
     return render(request, 'home.html', {'people': people})
