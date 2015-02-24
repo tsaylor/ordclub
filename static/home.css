@@ -33,12 +33,12 @@ body {
 }
 .people .long_profile {
     width: 100%;
-    height: 200px;
+    min-height: 200px;
     float: left;
 }
 .long_profile img {
-    height: 200px;
-    width: 200px;
+    height: 100px;
+    width: 100px;
 }
 .long_profile .name {
     font-size: 25pt;
@@ -61,6 +61,10 @@ a {
 }
 @media all and (min-width: 450px){
     .people li { width: 50%; }
+    .long_profile img {
+        height: 200px;
+        width: 200px;
+    }
 }
 @media all and (min-width: 800px){
     .people li { width: 33%; }
