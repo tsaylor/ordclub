@@ -12,3 +12,4 @@ python-twitter==2.2
 requests==2.5.1
 requests-oauthlib==0.4.2
 static3==0.5.1
+djangorestframework==3.0.5

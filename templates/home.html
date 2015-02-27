@@ -4,24 +4,26 @@
     <link href='http://fonts.googleapis.com/css?family=Lora|Lato:300' rel='stylesheet' type='text/css'>
     <link href='/static/home.css' rel='stylesheet' type='text/css'>
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="/static/handlebars-v3.0.0.js"></script>
     <script src="/static/home.js"></script>
 </head>
 <body>
-    <ul class="people">
-        {% for p in people %}<li class="short_profile">
-            <img src='{{ p.get_pic.bigger }}' />
-            <div class="name">{{ p.name }}</div>
-            <a class="username" href='https://twitter.com/{{ p.screen_name }}'>@{{ p.screen_name }}</a>
+    <ul class="people"></ul>
+    <script id="profile_template" type="text/x-handlebars-template"><li class="short_profile">
+            <img src='{% templatetag openvariable %}pic_url.bigger{% templatetag closevariable %}' />
+            <div class="name">{% templatetag openvariable %}name{% templatetag closevariable %}</div>
+            <a class="username" href='https://twitter.com/{% templatetag openvariable %}screen_name{% templatetag closevariable %}'>@{% templatetag openvariable %}screen_name{% templatetag closevariable %}</a>
         </li><li class="long_profile hidden">
-            <img src='{{ p.get_pic.200 }}' />
-            <div class="name">{{ p.name }}</div>
-            <a class="username" href='https://twitter.com/{{ p.screen_name }}'>@{{ p.screen_name }}</a>
-            <div class="location">{{ p.location }}</div>
-            <div class="bio">{{ p.description }}</div>
-        </li>{% endfor %}
-    </ul>
+            <img src='{% templatetag openvariable %}pic_url.[200]{% templatetag closevariable %}' />
+            <div class="name">{% templatetag openvariable %}name{% templatetag closevariable %}</div>
+            <a class="username" href='https://twitter.com/{% templatetag openvariable %}screen_name{% templatetag closevariable %}'>@{% templatetag openvariable %}screen_name{% templatetag closevariable %}</a>
+            <div class="location">{% templatetag openvariable %}location{% templatetag closevariable %}</div>
+            <div class="bio">{% templatetag openvariable %}description{% templatetag closevariable %}</div>
+        </li></script>
     <script>
-    attach_click_handlers();
+    $(document).ready(function() {
+        get_profiles_for_search('');
+    })
     </script>
 </body>
 </html>

@@ -67,6 +67,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'profiles',
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -125,3 +126,11 @@ CONSUMER_KEY = env_var('CONSUMER_KEY')
 CONSUMER_SECRET = env_var('CONSUMER_SECRET')
 ACCESS_TOKEN_KEY = env_var('ACCESS_TOKEN_KEY')
 ACCESS_TOKEN_SECRET = env_var('ACCESS_TOKEN_SECRET')
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
