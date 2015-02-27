@@ -18,6 +18,9 @@ class Migration(migrations.Migration):
                 ('modified', models.DateTimeField(auto_now=True)),
                 ('screen_name', models.CharField(max_length=45)),
                 ('name', models.CharField(max_length=45)),
+                ('location', models.CharField(max_length=40)),
+                ('description', models.CharField(max_length=200)),
+                ('profile_image_url', models.URLField()),
                 ('_user_json', models.TextField(blank=True)),
             ],
             options={

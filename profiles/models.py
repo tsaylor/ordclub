@@ -69,6 +69,9 @@ class CodedTypeModel(BaseModel):
 class Profile(BaseModel):
     screen_name = models.CharField(max_length=45)
     name = models.CharField(max_length=45)
+    location = models.CharField(max_length=40)
+    description = models.CharField(max_length=200)
+    profile_image_url = models.URLField()
     _user_json = models.TextField(blank=True)
 
     @property
@@ -78,6 +81,12 @@ class Profile(BaseModel):
     def user_json(self, value):
         self._user_json = json.dumps(value)
     
+    def get_pic(self):
+        return {'normal': self.profile_image_url,
+                'bigger': self.profile_image_url.replace('_normal', '_bigger'),
+                '200': self.profile_image_url.replace('_normal', '_200x200'),
+                '400': self.profile_image_url.replace('_normal', '_400x400')}
+
 
 class Status(BaseModel):
     profile = models.ForeignKey(Profile)

@@ -9,11 +9,11 @@
 <body>
     <ul class="people">
         {% for p in people %}<li class="short_profile">
-            <img src='{{ p.small_pic }}' />
+            <img src='{{ p.get_pic.bigger }}' />
             <div class="name">{{ p.name }}</div>
             <a class="username" href='https://twitter.com/{{ p.screen_name }}'>@{{ p.screen_name }}</a>
         </li><li class="long_profile hidden">
-            <img src='{{ p.large_pic }}' />
+            <img src='{{ p.get_pic.200 }}' />
             <div class="name">{{ p.name }}</div>
             <a class="username" href='https://twitter.com/{{ p.screen_name }}'>@{{ p.screen_name }}</a>
             <div class="location">{{ p.location }}</div>

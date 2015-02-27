@@ -44,6 +44,9 @@ class Command(BaseCommand):
             for l in list_members:
                 p = Profile.objects.create(name=l.name,
                                            screen_name=l.screen_name,
+                                           location=l.location,
+                                           description=l.description,
+                                           profile_image_url=l.profile_image_url,
                                            user_json=l.AsDict())
                 if l.status:
                     Status.objects.create(profile=p,
