@@ -15,13 +15,20 @@ class ProfileSerializer(serializers.HyperlinkedModelSerializer):
 
 # ViewSets define the view behavior.
 class ProfileViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Profile.objects.all()
+    model = Profile
     serializer_class = ProfileSerializer
+
+    def get_queryset(self):
+        search = self.request.GET.get('search', '')
+        qs = self.model.objects.all()
+        if search != '':
+            qs = qs.filter(name__icontains=search)
+        return qs
 
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
-router.register(r'profiles', ProfileViewSet)
+router.register(r'profiles', ProfileViewSet, base_name='profile')
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

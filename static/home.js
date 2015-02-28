@@ -1,3 +1,12 @@
+// http://stackoverflow.com/a/1909508/155987
+var delay = (function(){
+  var timer = 0;
+  return function(callback, ms){
+    clearTimeout (timer);
+    timer = setTimeout(callback, ms);
+  };
+})();
+
 function shortlong() {
     if ($(this).nextUntil('.short_profile').hasClass('hidden')) {
         $('.long_profile').addClass('hidden')
@@ -7,8 +16,10 @@ function shortlong() {
     }
 }
 
+last_search = 'dummy'
+
 function attach_click_handlers() {
-    $('.people li').click(shortlong)
+    $('.people li').click(shortlong);
 }
 
 function render_profile(profile) {
@@ -19,11 +30,15 @@ function render_profile(profile) {
 }
 
 function get_profiles_for_search(term) {
-    $.get('/api/profiles/', function (data, textStatus, jqXHR) {
+    $('#loading').removeClass('hidden');
+    $('.people').empty();
+    last_search = term;
+    $.get('/api/profiles/', {search: term}, function (data, textStatus, jqXHR) {
         for (idx in data) {
             render_profile(data[idx]);
         }
         attach_click_handlers();
+        $('#loading').addClass('hidden');
     })
 }
 
