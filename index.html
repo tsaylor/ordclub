@@ -11,7 +11,7 @@
     <form method="GET"><input type="text" name="search"></form>
     <ul class="people"></ul>
     <div id="loading"></div>
-    <script id="profile_template" type="text/x-handlebars-template">{% verbatim %}<li class="short_profile">
+    <script id="profile_template" type="text/x-handlebars-template"><li class="short_profile">
             <img src='{{pic_url.bigger}}' />
             <div class="name">{{name}}</div>
             <a class="username" href='https://twitter.com/{{screen_name}}'>@{{screen_name}}</a>
@@ -21,7 +21,7 @@
             <a class="username" href='https://twitter.com/{{screen_name}}'>@{{screen_name}}</a>
             <div class="location">{{location}}</div>
             <div class="bio">{{description}}</div>
-        </li>{% endverbatim %}</script>
+        </li></script>
     <script>
     $(document).ready(function() {
         get_profiles_for_search('');

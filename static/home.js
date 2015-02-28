@@ -1,3 +1,5 @@
+var api_url = 'https://ordclub.herokuapp.com'
+
 // http://stackoverflow.com/a/1909508/155987
 var delay = (function(){
   var timer = 0;
@@ -33,7 +35,7 @@ function get_profiles_for_search(term) {
     $('#loading').removeClass('hidden');
     $('.people').empty();
     last_search = term;
-    $.get('/api/profiles/', {search: term}, function (data, textStatus, jqXHR) {
+    $.get(api_url + '/api/profiles/', {search: term}, function (data, textStatus, jqXHR) {
         for (idx in data) {
             render_profile(data[idx]);
         }
