@@ -1,7 +1,11 @@
 from django.conf.urls import url, include
 from django.contrib.auth.models import User
-from profiles.models import Profile
+from django.db.models import Q
+
 from rest_framework import routers, serializers, viewsets
+
+from profiles.models import Profile
+
 
 # Serializers define the API representation.
 class ProfileSerializer(serializers.HyperlinkedModelSerializer):
@@ -22,7 +26,8 @@ class ProfileViewSet(viewsets.ReadOnlyModelViewSet):
         search = self.request.GET.get('search', '')
         qs = self.model.objects.all()
         if search != '':
-            qs = qs.filter(name__icontains=search)
+            qs = qs.filter(Q(name__icontains=search) |
+                           Q(description__icontains=search))
         return qs
 
 
