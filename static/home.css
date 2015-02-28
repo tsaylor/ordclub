@@ -13,6 +13,11 @@ body {
     height: 80px;
     background-image: url(/static/loading.gif);
 }
+input[name=search] {
+    height: 55px;
+    width: 100%;
+    font-size: 25pt;
+}
 .people {
     list-style-type: none;
     margin: 0;
@@ -71,6 +76,7 @@ a {
 }
 @media all and (min-width: 450px){
     .people li { width: 50%; }
+    input[name=search] {width: 50%;}
     .long_profile img {
         height: 200px;
         width: 200px;
@@ -78,12 +84,14 @@ a {
 }
 @media all and (min-width: 800px){
     .people li { width: 33%; }
+    input[name=search] {width: 33%;}
 }
 @media all and (min-width: 1000px){
     .people li { width: 25%; }
+    input[name=search] {width: 25%;}
 }
 @media all and (min-width: 1150px){
-    .people { width: 1150px; }
+    body { width: 1150px; }
 }
 .hidden {
     display: none !important;
