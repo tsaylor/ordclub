@@ -12,11 +12,12 @@
     <ul class="people"></ul>
     <div id="loading"></div>
     <script id="profile_template" type="text/x-handlebars-template">{% verbatim %}<li class="short_profile">
-            <img src='{{pic_url.bigger}}' />
+            <img class="small_pic" src='{{pic_url.bigger}}' />
             <div class="name">{{name}}</div>
             <a class="username" href='https://twitter.com/{{screen_name}}'>@{{screen_name}}</a>
+            <div class="close_icon">Close</div>
         </li><li class="long_profile hidden">
-            <img src='{{pic_url.[200]}}' />
+            <img class="large_pic" src='{{pic_url.[200]}}' />
             <div class="name">{{name}}</div>
             <a class="username" href='https://twitter.com/{{screen_name}}'>@{{screen_name}}</a>
             <div class="location">{{location}}</div>
