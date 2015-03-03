@@ -67,6 +67,7 @@ class CodedTypeModel(BaseModel):
 
 
 class Profile(BaseModel):
+    profile_id = models.BigIntegerField()
     screen_name = models.CharField(max_length=45)
     name = models.CharField(max_length=45)
     location = models.CharField(max_length=40)
@@ -90,7 +91,7 @@ class Profile(BaseModel):
 
 class Status(BaseModel):
     profile = models.ForeignKey(Profile)
-    status_id = models.CharField(max_length=18)
+    status_id = models.BigIntegerField()
     _status_json = models.TextField(blank=True)
 
     @property
