@@ -26,12 +26,12 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        api = twitter.Api(consumer_key=settings.CONSUMER_KEY,
+        self.api = twitter.Api(consumer_key=settings.CONSUMER_KEY,
                           consumer_secret=settings.CONSUMER_SECRET,
                           access_token_key=settings.ACCESS_TOKEN_KEY,
                           access_token_secret=settings.ACCESS_TOKEN_SECRET)
         try:
-            api.VerifyCredentials()
+            self.api.VerifyCredentials()
         except twitter.error.TwitterError as e:
             self.stderr.write('Twitter authentication failed.')
             return
@@ -41,42 +41,60 @@ class Command(BaseCommand):
                     'Must specify list owner screen name and list name separated by "/"'
                 )
             (owner, listname) = options['list'].split('/')
-            list_members = api.GetListMembers(None, listname, owner_screen_name=owner)
+            list_members = self.api.GetListMembers(None, listname, owner_screen_name=owner)
             for l in list_members:
                 print l.screen_name
-                defaults = dict(
-                    name=l.name,
-                    screen_name=l.screen_name,
-                    location=l.location,
-                    description=l.description,
-                    profile_image_url=l.profile_image_url,
-                    user_json=l.AsDict()
-                )
-                p, created = Profile.objects.get_or_create(profile_id=l.id, defaults=defaults)
-                if not created:
-                    for k, v in defaults.items():
-                        setattr(p, k, v)
-                    p.save()
+                profile = self.save_user(l)
+                self.get_user_timeline(profile)
+        elif options['username']:
+            twitter_user = self.api.GetUser(screen_name=options['username'])
+            profile = self.save_user(twitter_user)
+            print profile.screen_name
+            self.get_user_timeline(profile)
 
-                kwargs = {'count': 200}
-                try:
-                    newest_status = Status.objects.filter(profile=p).order_by('id')[0]
-                except IndexError:
-                    pass
-                else:  # don't go back beyond the newest status currently known
-                    kwargs['since_id'] = newest_status.status_id
-                print kwargs
-                try:
-                    statuses = api.GetUserTimeline(p.profile_id, **kwargs)
-                except twitter.error.TwitterError as e:
-                    print "twitter error {} on {}".format(e, p.screen_name)
-                kwargs['max_id'] = None
-                while len(statuses) > 0 and statuses[-1].id != kwargs['max_id']:
-                    time.sleep(5)  # should delay enough between queries to overcome the rate limit
-                    for s in statuses:
-                        s_obj, created = Status.objects.get_or_create(
-                            status_id=s.id, defaults={'profile': p, 'status_json': s.AsDict()}
-                        )
-                    kwargs['max_id'] = s_obj.status_id-1
-                    print kwargs
-                    statuses = api.GetUserTimeline(p.profile_id, **kwargs)
+    def save_user(self, user):
+        """ takes a twitter api user object, returns a Profile model object """
+        defaults = dict(
+            name=user.name,
+            screen_name=user.screen_name,
+            location=user.location,
+            description=user.description,
+            profile_image_url=user.profile_image_url,
+            user_json=user.AsDict()
+        )
+        p, created = Profile.objects.get_or_create(profile_id=user.id, defaults=defaults)
+        if not created:
+            for k, v in defaults.items():
+                setattr(p, k, v)
+            p.save()
+        return p
+
+    def get_user_timeline(self, profile):
+        """ takes a Profile model object, captures all the profile's statuses. """
+        kwargs = {'count': 200}
+        try:
+            newest_status = Status.objects.filter(profile=profile).order_by('id')[0]
+        except IndexError:
+            pass
+        else:  # don't go back beyond the newest status currently known
+            kwargs['since_id'] = newest_status.status_id
+            if newest_status.status_id == profile.user_json['status']['id']:
+                print "nothing to do"
+                return None
+        print kwargs
+        try:
+            statuses = self.api.GetUserTimeline(profile.profile_id, **kwargs)
+        except twitter.error.TwitterError as e:
+            print "twitter error {} on {}".format(e, profile.screen_name)
+            return None
+        kwargs['max_id'] = None
+        while len(statuses) > 0 and statuses[-1].id != kwargs['max_id']:
+            time.sleep(5)  # should delay enough between queries to overcome the rate limit
+            for s in statuses:
+                s_obj, created = Status.objects.get_or_create(
+                    status_id=s.id, defaults={'profile': profile, 'status_json': s.AsDict()}
+                )
+            kwargs['max_id'] = s_obj.status_id-1
+            print kwargs
+            statuses = self.api.GetUserTimeline(profile.profile_id, **kwargs)
+
