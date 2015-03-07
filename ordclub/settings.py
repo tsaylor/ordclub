@@ -134,3 +134,18 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+
+# Opbeat
+
+INSTALLED_APPS += (
+    'opbeat.contrib.django',
+)
+OPBEAT = {
+    'ORGANIZTION_ID': env_var('OPBEAT_ORGANIZTION_ID'),
+    'APP_ID': env_var('OPBEAT_APP_ID'),
+    'SECRET_TOKEN': env_var('OPBEAT_SECRET_TOKEN')
+}
+MIDDLEWARE_CLASSES += (
+    'opbeat.contrib.django.middleware.OpbeatAPMMiddleware',
+)

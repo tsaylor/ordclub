@@ -13,3 +13,4 @@ requests==2.5.1
 requests-oauthlib==0.4.2
 static3==0.5.1
 djangorestframework==3.0.5
+opbeat==2.0.1
