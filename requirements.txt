@@ -7,7 +7,7 @@ django-toolbelt==0.0.1
 gunicorn==19.2.1
 MarkupSafe==0.23
 oauthlib==0.7.2
-psycopg2==2.6
+psycopg2
 python-twitter==2.2
 requests==2.5.1
 requests-oauthlib==0.4.2
