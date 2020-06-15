@@ -1,10 +1,10 @@
 import twitter
 import pprint
 
-consumer_key = 'sJoKW3WVonOYoHPh4yEEwLBgv'
-consumer_secret = 'm82kjSEBQNXfiX17ABsFa1QkqnKZW04Na4qONVeHurjwGDUTv2'
-access_token_key = '7686862-dImzWYT4fRvGl8wPpJO6mfBNliZZEcUTMCdoM1fZq7'
-access_token_secret = 'zihJwRrEBeQh7vaUC77zSfoAb0R74Ov4P8KGRQX2DsfEM'
+consumer_key = ''
+consumer_secret = ''
+access_token_key = ''
+access_token_secret = ''
 api = twitter.Api(consumer_key=consumer_key,
                   consumer_secret=consumer_secret,
                   access_token_key=access_token_key,
